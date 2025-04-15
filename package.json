@@ -1,0 +1,59 @@
+{
+  "name": "remote-vast-extension",
+  "displayName": "Remote VAST Extension",
+  "description": "VS Code extension for Remote VAST",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "remote-vast-extension.connectToVast",
+        "title": "Connect to VAST.ai Instance"
+      }
+    ],
+    "configuration": {
+      "title": "Remote VAST Extension",
+      "properties": {
+        "remoteVast.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for VAST.ai authentication"
+        },
+        "remoteVast.publicSshKeyPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to your public SSH key file"
+        },
+        "remoteVast.privateSshKeyPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to your private SSH key file"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.10.0",
+    "@types/glob": "^8.1.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}
