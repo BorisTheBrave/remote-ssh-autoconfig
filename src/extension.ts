@@ -27,15 +27,12 @@ export function activate(context: vscode.ExtensionContext) {
     return true;
   }
 
-  async function getSshKeyPairUI(): Promise<[string, string] | null> {
-    const publicSshKeyPath: string | undefined = vscode.workspace
-      .getConfiguration("remoteVast")
-      .get("publicSshKeyPath");
+  async function getPrivateSshKeyPath(): Promise<string | null> {
     const privateSshKeyPath: string | undefined = vscode.workspace
       .getConfiguration("remoteVast")
       .get("privateSshKeyPath");
 
-    if (!publicSshKeyPath || !privateSshKeyPath) {
+    if (!privateSshKeyPath) {
       vscode.window
         .showErrorMessage(
           "SSH key pair is required to connect to VAST.ai instances.",
@@ -44,34 +41,24 @@ export function activate(context: vscode.ExtensionContext) {
         .then(() => {
           vscode.commands.executeCommand(
             "workbench.action.openSettings",
-            "remoteVast.publicSshKeyPath"
+            "remoteVast.privateSshKeyPath"
           );
         });
 
       return null;
     }
 
-    return [publicSshKeyPath, privateSshKeyPath];
+    return privateSshKeyPath;
   }
 
   let disposable = vscode.commands.registerCommand(
     "remote-vast-extension.connectToVast",
     async () => {
       try {
-        const keyPair = await getSshKeyPairUI();
-        if (!keyPair) {
+        const privateSshKeyPath = await getPrivateSshKeyPath();
+        if (!privateSshKeyPath) {
           return;
         }
-        const [publicSshKeyPath, privateSshKeyPath] = keyPair;
-
-        // Read the public key
-        const publicSshKey = await vscode.workspace.fs.readFile(
-          vscode.Uri.file(publicSshKeyPath)
-        );
-
-        vscode.window.showInformationMessage(
-          `Public SSH key: ${publicSshKey.toString()}`
-        );
 
         if (!(await ensureVastApiKeyUI())) {
           return;

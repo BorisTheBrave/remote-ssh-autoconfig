@@ -26,11 +26,6 @@
           "default": "",
           "description": "API key for VAST.ai authentication"
         },
-        "remoteVast.publicSshKeyPath": {
-          "type": "string",
-          "default": "",
-          "description": "Path to your public SSH key file"
-        },
         "remoteVast.privateSshKeyPath": {
           "type": "string",
           "default": "",

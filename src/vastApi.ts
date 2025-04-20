@@ -99,4 +99,34 @@ export class VastApi {
       );
     }
   }
+
+  async attachSshKey(instanceId: number, publicSshKey: string): Promise<void> {
+    try {
+      if (!this.apiKey) {
+        throw new Error(
+          "API key is not set. Please set it in the extension settings or when prompted."
+        );
+      }
+
+      const response = await axios.post(
+        `${this.baseUrl}/instances/${instanceId}/ssh/`,
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${this.apiKey}`,
+          },
+          data: {
+            body: {
+              ssh_key: publicSshKey,
+            },
+          },
+        }
+      );
+
+      return response.data.instances;
+    } catch (error) {
+      throw new Error(`Failed to attach SSH key: ${(error as Error).message}`);
+    }
+  }
 }
