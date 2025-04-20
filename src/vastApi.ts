@@ -26,7 +26,9 @@ export class VastApi {
   private apiKey: string | undefined;
 
   constructor() {
-    this.apiKey = vscode.workspace.getConfiguration("remoteVast").get("apiKey");
+    this.apiKey = vscode.workspace
+      .getConfiguration("remoteSshAutoconfig")
+      .get("apiKey");
   }
 
   /**
@@ -35,7 +37,7 @@ export class VastApi {
   setApiKey(apiKey: string): void {
     this.apiKey = apiKey;
     vscode.workspace
-      .getConfiguration("remoteVast")
+      .getConfiguration("remoteSshAutoconfig")
       .update("apiKey", apiKey, vscode.ConfigurationTarget.Global);
   }
 

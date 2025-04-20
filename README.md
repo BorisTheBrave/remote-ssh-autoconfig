@@ -14,8 +14,8 @@ This VS Code extension automatically updates your ssh config file for the detail
 
 * Install this extension
 * Install Remote-SSH extension
-* Open settings and set `remoteVast.apiKey` to your vast API key (from https://cloud.vast.ai/manage-keys/)
-* (optional) Also set the path of your private key `remoteVast.privateSshKeyPath` if needed.
+* Open settings and set `remoteSshAutoconfig.apiKey` to your vast API key (from https://cloud.vast.ai/manage-keys/)
+* (optional) Also set the path of your private key `remoteSshAutoconfig.privateSshKeyPath` if needed.
 * (optional) Configure vast.ai to automatically setup instances your public key.
 * Run "Regen vast.ai ssh config" from the command palette
 * Run "Remote-SSH: Connect to Host.." and select your vast instance.

@@ -1,7 +1,7 @@
 {
-  "name": "remote-vast-extension",
-  "displayName": "Remote VAST Extension",
-  "description": "VS Code extension for Remote VAST",
+  "name": "remote-ssh-autoconfig",
+  "displayName": "Remote SSH Autoconfig",
+  "description": "VS Code extension for Remote SSH configuration",
   "version": "0.0.1",
   "repository": {
     "type": "git",
@@ -18,19 +18,19 @@
   "contributes": {
     "commands": [
       {
-        "command": "remote-vast-extension.connectToVast",
+        "command": "remote-ssh-autoconfig.connectToVast",
         "title": "Regen vast.ai ssh config"
       }
     ],
     "configuration": {
-      "title": "Remote VAST Extension",
+      "title": "Remote SSH Autoconfig",
       "properties": {
-        "remoteVast.apiKey": {
+        "remoteSshAutoconfig.apiKey": {
           "type": "string",
           "default": "",
           "description": "API key for VAST.ai authentication"
         },
-        "remoteVast.privateSshKeyPath": {
+        "remoteSshAutoconfig.privateSshKeyPath": {
           "type": "string",
           "default": "",
           "description": "Path to your private SSH key file"

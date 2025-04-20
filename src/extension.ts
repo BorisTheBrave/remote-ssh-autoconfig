@@ -29,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   async function getPrivateSshKeyPath(): Promise<string | null> {
     const privateSshKeyPath: string | undefined = vscode.workspace
-      .getConfiguration("remoteVast")
+      .getConfiguration("remoteSshAutoconfig")
       .get("privateSshKeyPath");
 
     if (!privateSshKeyPath) {
@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
         .then(() => {
           vscode.commands.executeCommand(
             "workbench.action.openSettings",
-            "remoteVast.privateSshKeyPath"
+            "remoteSshAutoconfig.privateSshKeyPath"
           );
         });
 
@@ -52,7 +52,7 @@ export function activate(context: vscode.ExtensionContext) {
   }
 
   let disposable = vscode.commands.registerCommand(
-    "remote-vast-extension.connectToVast",
+    "remote-ssh-autoconfig.connectToVast",
     async () => {
       try {
         const privateSshKeyPath = await getPrivateSshKeyPath();
