@@ -15,6 +15,7 @@ export interface VastInstance {
   mem_usage: number;
   mem_limit: number;
   public_ipaddr: string;
+  ports: Record<string, { HostIp: string; HostPort: string }[]>;
   // Add other fields as needed
 }
 

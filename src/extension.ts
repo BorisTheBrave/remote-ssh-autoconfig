@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { VastApi, VastInstance } from "./vastApi";
-import { saveSshConfig, connectToInstance } from "./utils";
+import { updateSshConfig } from "./utils";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("Remote VAST Extension is now active!");
@@ -74,38 +74,8 @@ export function activate(context: vscode.ExtensionContext) {
           return;
         }
 
-        // Create quick pick items from instances
-        const items = instances.map((instance) => ({
-          label: instance.label || `Instance ${instance.id}`,
-          description: `${instance.ssh_host}:${instance.ssh_port} (${
-            instance.gpu_arch
-          }, GPU: ${Math.round(instance.gpu_util * 100)}%, CPU: ${Math.round(
-            instance.cpu_util * 100
-          )}%)`,
-          instance: instance,
-        }));
-
-        // Show quick pick
-        const selected = await vscode.window.showQuickPick(items, {
-          placeHolder: "Select a VAST.ai instance to connect to",
-        });
-
-        if (selected) {
-          try {
-            // Get detailed instance information
-            const instanceDetails = await vastApi.getInstanceDetails(
-              selected.instance.id
-            );
-
-            // Save SSH config
-            await saveSshConfig(context, instanceDetails, privateSshKeyPath);
-
-            // Connect to the instance
-            await connectToInstance(instanceDetails);
-          } catch (error) {
-            vscode.window.showErrorMessage((error as Error).message);
-          }
-        }
+        // Update SSH config with all instances
+        await updateSshConfig(context, instances, privateSshKeyPath);
       } catch (error) {
         vscode.window.showErrorMessage((error as Error).message);
       }

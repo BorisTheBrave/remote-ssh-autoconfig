@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "remote-vast-extension.connectToVast",
-        "title": "Connect to VAST.ai Instance"
+        "title": "Regen vast.ai ssh config"
       }
     ],
     "configuration": {
