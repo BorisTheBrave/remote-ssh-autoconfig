@@ -27,25 +27,13 @@ export function activate(context: vscode.ExtensionContext) {
     return true;
   }
 
-  async function getPrivateSshKeyPath(): Promise<string | null> {
+  async function getPrivateSshKeyPath(): Promise<string | undefined> {
     const privateSshKeyPath: string | undefined = vscode.workspace
       .getConfiguration("remoteSshAutoconfig")
       .get("privateSshKeyPath");
 
     if (!privateSshKeyPath) {
-      vscode.window
-        .showErrorMessage(
-          "SSH key pair is required to connect to VAST.ai instances.",
-          "Open settings"
-        )
-        .then(() => {
-          vscode.commands.executeCommand(
-            "workbench.action.openSettings",
-            "remoteSshAutoconfig.privateSshKeyPath"
-          );
-        });
-
-      return null;
+      return undefined;
     }
 
     return privateSshKeyPath;
@@ -56,9 +44,6 @@ export function activate(context: vscode.ExtensionContext) {
     async () => {
       try {
         const privateSshKeyPath = await getPrivateSshKeyPath();
-        if (!privateSshKeyPath) {
-          return;
-        }
 
         if (!(await ensureVastApiKeyUI())) {
           return;

@@ -17,10 +17,8 @@ function getSshConfigPath(): string {
  */
 export function createSshConfig(
   instance: VastInstance,
-  privateKeyPath: string
+  privateKeyPath?: string
 ): string {
-  // Escape backslashes and wrap in quotes
-  const escapedPath = privateKeyPath.replace(/\\/g, "\\\\");
   // For some reason, this is the wrong port?
   //const hostname = instance.ssh_host;
   //const port = instance.ssh_port;
@@ -29,12 +27,20 @@ export function createSshConfig(
 
   const name = `vast-${instance.id} ${instance.template_name} ${instance.gpu_name}`;
   const nameEscaped = name.replace(/\\/g, "\\\\");
-  return `Host "${nameEscaped}"
+
+  let config = `Host "${nameEscaped}"
   HostName ${hostname}
   Port ${port}
   User root
-  IdentityFile "${escapedPath}"
   StrictHostKeyChecking no`;
+
+  if (privateKeyPath) {
+    // Escape backslashes and wrap in quotes
+    const escapedPath = privateKeyPath.replace(/\\/g, "\\\\");
+    config += `\n  IdentityFile "${escapedPath}"`;
+  }
+
+  return config;
 }
 
 /**
@@ -43,7 +49,7 @@ export function createSshConfig(
 export async function updateSshConfig(
   context: vscode.ExtensionContext,
   instances: VastInstance[],
-  privateKeyPath: string
+  privateKeyPath?: string
 ): Promise<void> {
   const sshConfigPath = getSshConfigPath();
 
