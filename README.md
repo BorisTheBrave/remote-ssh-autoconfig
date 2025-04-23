@@ -32,7 +32,7 @@ Initial release
 2. Run `npm install`
 3. Run `npm run compile`
 3. Open `out/extension.js` in VS Code
-4. Press F5 to start debugging
+4. Press F5 and select "VS Code Extension Development" to start debugging
 
 ## Deployment
 
