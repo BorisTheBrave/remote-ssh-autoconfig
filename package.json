@@ -2,7 +2,7 @@
   "name": "remote-ssh-autoconfig",
   "displayName": "Remote SSH Autoconfig",
   "description": "VS Code extension for Remote SSH configuration",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/BorisTheBrave/remote-ssh-autoconfig.git"
