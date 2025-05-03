@@ -27,7 +27,13 @@ export function createSshConfig(
   const hostname = instance.public_ipaddr;
   const port = instance.ports["22/tcp"][0].HostPort;
 
-  const name = `vast-${instance.id} ${instance.template_name} ${instance.gpu_name}`;
+  // Sanitize the hostname to be legal
+  const name =
+    `vast-${instance.id}-${instance.template_name}-${instance.gpu_name}`
+      .replace(/[^a-zA-Z0-9-]/g, "-") // Replace any non-alphanumeric characters with hyphens
+      .replace(/-+/g, "-") // Replace multiple hyphens with a single hyphen
+      .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+
   const nameEscaped = name.replace(/\\/g, "\\\\");
 
   let config = `Host "${nameEscaped}"
